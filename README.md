@@ -1,0 +1,4 @@
+# TratamentoDeExcecao 
+METODO MUITO RUIM
+METODO RUIM
+METODO BOM
