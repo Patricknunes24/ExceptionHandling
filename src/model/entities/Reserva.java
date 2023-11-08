@@ -1,5 +1,7 @@
 package model.entities;
 
+import model.exception.MainException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +17,9 @@ public class Reserva {
     }
 
     public Reserva(Integer numeroQuarto, Date checkIn, Date checkOut) {
+        if(!checkOut.after(checkIn)){
+            throw new MainException(" A data de CheckIn não é anterior a data de CheckOut");
+        }
         this.numeroQuarto = numeroQuarto;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -40,18 +45,19 @@ public class Reserva {
         long dur = checkOut.getTime() - checkIn.getTime();
         return TimeUnit.DAYS.convert(dur,TimeUnit.MILLISECONDS);
     }
-    public String dataAtualizada(Date checkIn,Date checkOut){
+    public void dataAtualizada(Date checkIn,Date checkOut) {
         // alterações
         Date dataa = new Date();
         if (checkIn.before(dataa)||checkOut.before(dataa)){
-            return "A data fornecida e anterior a Data atual";
+            throw new MainException(" A data de CheckIn ou CheckOut e anterior a data Atual");
         }
-        if(!checkIn.after(checkOut)){
-            return "A data de CheckIn não é anterior a data de CheckOut";
+        if(!checkOut.after(checkIn)){
+            throw new MainException(" A data de CheckIn não é anterior a data de CheckOut");
         }
+        System.out.println("FIM DO CODIGO");
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        return null;
+
     }
     @Override
     public String  toString(){
