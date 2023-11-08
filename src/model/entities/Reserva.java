@@ -40,9 +40,18 @@ public class Reserva {
         long dur = checkOut.getTime() - checkIn.getTime();
         return TimeUnit.DAYS.convert(dur,TimeUnit.MILLISECONDS);
     }
-    public void dataAtualizada(Date checkIn,Date checkOut){
+    public String dataAtualizada(Date checkIn,Date checkOut){
+        // alterações
+        Date dataa = new Date();
+        if (checkIn.before(dataa)||checkOut.before(dataa)){
+            return "A data fornecida e anterior a Data atual";
+        }
+        if(!checkIn.after(checkOut)){
+            return "A data de CheckIn não é anterior a data de CheckOut";
+        }
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+        return null;
     }
     @Override
     public String  toString(){
